@@ -42,9 +42,11 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Get Price" on onPress={() => this.getBtcPrice()}>Get Price</Button>
-        <Text>{this.state.symbol1} -> USD: ${this.state.price1}</Text>
-        <Text>{this.state.symbol2} -> BTC: ${this.state.price2InBitcoin}</Text>
+        <Button title="Refresh" on onPress={() => this.getBtcPrice()}>Get Price</Button>
+        <Text>{this.state.symbol1} -> USD</Text>
+        <Text style={styles.spaceBelowAfterPrice}>${this.state.price1}</Text>
+        <Text>{this.state.symbol2} -> BTC</Text>
+        <Text style={styles.priceText}>{this.state.price2InBitcoin}</Text>
       </View>
     );
   }
@@ -57,4 +59,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  priceText: {
+    fontSize: 18
+  },
+  spaceBelowAfterPrice: {
+    fontSize: 18,
+    marginBottom: 20
+  }
 });
