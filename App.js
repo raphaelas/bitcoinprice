@@ -27,7 +27,7 @@ export default class App extends React.Component {
      const topCoin = responseJson[0];
      const secondCoin = responseJson[1];
       this.setState({
-        price1: topCoin.price_usd,
+        price1: parseFloat(topCoin.price_usd).toFixed(2),
         symbol1: topCoin.symbol,
         price2InBitcoin: secondCoin.price_btc,
         symbol2: secondCoin.symbol
