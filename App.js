@@ -22,7 +22,7 @@ export default class App extends React.Component {
        'Content-Type': 'application/json'
      }
    })
-   .then((response) => JSON.parse(response._bodyText))
+   .then((response) => response.json())
    .then((responseJson) => { 
      const topCoin = responseJson[0];
      const secondCoin = responseJson[1];
