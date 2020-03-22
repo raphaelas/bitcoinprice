@@ -15,23 +15,41 @@ export default class App extends React.Component {
   }
 
   getBtcPrice() {
-   fetch('https://api.coinmarketcap.com/v1/ticker/?limit=2', {
+   fetch('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=1', {
      method: 'GET',
      headers: {
        'Accept': 'application/json',
-       'Content-Type': 'application/json'
+       'Content-Type': 'application/json',
+       'X-CMC_PRO_API_KEY': 'b295ec78-ec7d-4be4-8ff3-46d7d8d62cb7'
      }
    })
    .then((response) => response.json())
    .then((responseJson) => { 
+     responseJson = responseJson.data;
      const topCoin = responseJson[0];
-     const secondCoin = responseJson[1];
+     this.setState({
+      price1: parseFloat(topCoin.quote.USD.price).toFixed(2),
+      symbol1: topCoin.symbol,
+    });
+     fetch('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=2&limit=1&convert=BTC', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CMC_PRO_API_KEY': 'b295ec78-ec7d-4be4-8ff3-46d7d8d62cb7'
+      }
+    }).then((response) => response.json())
+    .then((responseJson) => { 
+      responseJson = responseJson.data;
+      const secondCoin = responseJson[0];
       this.setState({
-        price1: parseFloat(topCoin.price_usd).toFixed(2),
-        symbol1: topCoin.symbol,
-        price2InBitcoin: secondCoin.price_btc,
+        price2InBitcoin: parseFloat(secondCoin.quote.BTC.price).toFixed(8),
         symbol2: secondCoin.symbol
       });
+    })
+    .catch((error) => { 
+      console.error(error);
+    });
    })
    .catch((error) => { 
      console.error(error);
